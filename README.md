@@ -7,22 +7,20 @@ This project involves analyzing stock pricing data to understand its structure a
 
 ## Steps Taken
 
-###### 1. Understanding the Data
+### 1. Understanding the Data
 
 To begin, I loaded the stock pricing data to get an overview of its structure. The initial inspection included:
 - Checking the number of rows and columns.
 - Identifying any duplicates or missing values.
 - Extracting key features such as the number of unique tickers and the date range of the data.
 
-### 2. Initial Data Inspection
-
-- **Number of Rows:** 1245
-- **Number of Columns:** 7
-- **Columns:** date, open, high, low, close, volume, ticker
-- **Duplicates:** 0
-- **Missing Values:** None
-- **Number of Unique Tickers:** 5 - (AAPL, GOOG, BLK, MSFT, TSLA)
-- **Date Range:** From November 9, 2015 to November 2, 2016
+    - **Number of Rows:** 1245
+    - **Number of Columns:** 7
+    - **Columns:** date, open, high, low, close, volume, ticker
+    - **Duplicates:** 0
+    - **Missing Values:** None
+    - **Number of Unique Tickers:** 5 - (AAPL, GOOG, BLK, MSFT, TSLA)
+    - **Date Range:** From November 9, 2015 to November 2, 2016
 
 ### 3. Data Transformation
 
