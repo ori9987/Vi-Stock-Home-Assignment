@@ -1,8 +1,5 @@
-Sure, here is the README file in a format that you can copy and use:
 
----
-
-# Stock Pricing Data Analysis
+# Stock Pricing 
 
 ## Assignment Overview
 
