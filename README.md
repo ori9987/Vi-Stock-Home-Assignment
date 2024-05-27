@@ -7,7 +7,7 @@ This project involves analyzing stock pricing data to understand its structure a
 
 ## Steps Taken
 
-### 1. Understanding the Data
+###### 1. Understanding the Data
 
 To begin, I loaded the stock pricing data to get an overview of its structure. The initial inspection included:
 - Checking the number of rows and columns.
