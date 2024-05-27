@@ -21,23 +21,12 @@ To begin, I loaded the stock pricing data to get an overview of its structure. T
 - **Columns:** date, open, high, low, close, volume, ticker
 - **Duplicates:** 0
 - **Missing Values:** None
-- **Number of Unique Tickers:** 5
+- **Number of Unique Tickers:** 5 - (AAPL, GOOG, BLK, MSFT, TSLA)
 - **Date Range:** From November 9, 2015 to November 2, 2016
 
-### 3. Key Features Identified
+### 3. Data Transformation
 
-The unique tickers identified in the dataset are:
-1. AAPL
-2. GOOG
-3. BLK
-4. MSFT
-5. TSLA
 
-### 4. Data Transformation
-
-Given the relatively simple nature of this dataset, initial transformations include:
-- Converting the `date` column to a datetime format for easier manipulation and analysis.
-- Any additional transformations required for more complex analyses.
 
 ### 5. Structuring the Project
 
@@ -49,8 +38,3 @@ The final step involves deploying the transformation logic to the cloud. This en
 
 ## Conclusion
 
-By following these steps, I ensure a thorough understanding of the data before performing any transformations. This structured approach not only helps in maintaining data integrity but also makes the process transparent and reproducible for reviewers.
-
----
-
-Feel free to modify this README as needed to better fit your specific project and requirements.
