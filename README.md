@@ -3,7 +3,7 @@
 
 ## Assignment Overview
 
-This project involves analyzing stock pricing data to understand its structure and quality. The primary goal is to assess the data's integrity, identify key features, and perform necessary transformations. The process is documented to ensure clarity and reproducibility for reviewers.
+This project involves analyzing stock pricing data to understand its structure and quality. The primary goal is to assess the data's integrity, identify key features, perform necessary transformations and deploy the code smoothly to the cloud.
 
 ## Steps Taken
 
@@ -22,17 +22,13 @@ To begin, I loaded the stock pricing data to get an overview of its structure. T
     - **Number of Unique Tickers:** 5 - (AAPL, GOOG, BLK, MSFT, TSLA)
     - **Date Range:** From November 9, 2015 to November 2, 2016
 
-### 3. Data Transformation
+### 2. Data Transformation
+The data transformation process includes several steps to enrich the dataset and prepare it for analysis:
+    Date Parsing: Convert date strings to date objects, using the legacy time parser policy for compatibility.
+    Adding Calculated Columns: Add columns for previous close price, daily return, and trading frequency.
+    Aggregating Data: Calculate average daily returns, identify the most frequently traded stock, determine the most volatile stock, and find the top N days with       the highest 30-day returns.
 
-
-
-### 5. Structuring the Project
-
-For complex projects, I prefer to encapsulate my functions within a class structure. This approach allows for better organization and modularity. By importing relevant data into the class, any changes can be managed in a centralized manner, enhancing maintainability.
-
-### 6. Deployment
-
-The final step involves deploying the transformation logic to the cloud. This ensures that the data is accessible and can be processed efficiently in a scalable environment.
-
-## Conclusion
+### 3. Deployment
+The final step involves deploying the transformation logic to the cloud. 
+Provided in the repo the CloudFormation_template I used to deployed and test on my on environment.
 
