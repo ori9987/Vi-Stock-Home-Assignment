@@ -41,3 +41,13 @@ The data transformation process includes several steps to enrich the dataset and
 The final step involves deploying the transformation logic to the cloud. 
 Provided in the repo the CloudFormation_template I used to deployed and test on my on environment.
 
+The deployment on Vi AWS Management Console involved several manual steps to set up the necessary infrastructure:
+
+S3 Bucket Creation
+
+AWS Glue Job
+
+AWS Glue Data Catalog Crawler
+
+Athena Query Validation
+
