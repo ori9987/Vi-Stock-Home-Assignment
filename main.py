@@ -5,9 +5,8 @@ import logging
 
 
 S3_BUCKET_NAME = 's3://aws-glue-ori-schwa-vi-home-assignment'
-INPUT_DATA_FILE_NAME= 'stock_prices.csv'
 OUTPUT_FOLDER = 'results'
-FILE_PATH='s3://aws-glue-ori-vi-home-assignment/stock_prices.csv'
+FILE_PATH='s3://aws-glue-ori-schwa-vi-home-assignment/stock_prices.csv'
 
 
 
@@ -56,10 +55,10 @@ def read_and_transform_data(file_path = FILE_PATH):
     Reads stock prices data from a CSV file, processes it, and returns the transformed DataFrame.
 
     Args:
-    file_path (str): Path to the CSV file containing stock prices data. Default is "/content/stock_prices.csv".
+    file_path (str): Path to the CSV file containing stock prices data.
 
     Returns:
-    Optional[Tuple[DataFrame, Window]]: Transformed DataFrame with additional columns and the window specification used.
+    DataFrame, Window: Transformed DataFrame with additional columns and the window specification used.
     """
     try:
         logger.info(f"Reading data from {file_path}")
@@ -73,16 +72,16 @@ def read_and_transform_data(file_path = FILE_PATH):
 
 def save_to_csv(df, s3_bucket = S3_BUCKET_NAME, filename = '',output_folder=OUTPUT_FOLDER):
     """
-    Saves DataFrame to a Parquet file in the specified S3 bucket, partitioned if required.
+    Saves DataFrame to a csv file in the specified S3 bucket.
 
     Args:
     df (DataFrame): DataFrame to be saved.
     s3_bucket (str): S3 bucket path.
-    filename (str): Filename for the Parquet file.
+    filename (str): Filename for the csv file.
     """
     try:
         s3_path = f"{s3_bucket}/{output_folder}/{filename}"
-        df.write.mode("overwrite").csv(s3_path)
+        df.write.mode("overwrite").option("header", "true").csv(s3_path)
         logger.info(f"Data saved to {s3_path} in csv format")
     except Exception as e:
         logger.error(f"An error occurred while saving data to csv: {e}")
@@ -121,7 +120,7 @@ def most_frequent_stock(stock_prices):
 
 def most_volatile_stock(stock_prices):
     """
-    Finds and displays the most volatile stock.
+    Finds and displays the most volatile stock cauelated as std of daily returens multiple by sqrt of 252 that are the traded days in a year.
 
     Args:
     stock_prices (DataFrame): DataFrame containing stock prices.
