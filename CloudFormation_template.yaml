@@ -45,7 +45,7 @@ Resources:
   S3Bucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: aws-glue-ori-schw-vi-home-assignment
+      BucketName: aws-glue-ori-schwa-vi-home-assignment
       AccessControl: Private
     UpdateReplacePolicy: Retain
     DeletionPolicy: Retain
@@ -72,7 +72,7 @@ Resources:
               Type: date
             - Name: average_return
               Type: double
-          Location: s3://aws-glue-ori-schw-vi-home-assignment/results/
+          Location: s3://aws-glue-ori-schwa-vi-home-assignment/results/
           InputFormat: org.apache.hadoop.mapred.TextInputFormat
           OutputFormat: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
           SerdeInfo:
@@ -96,7 +96,7 @@ Resources:
               Type: string
             - Name: frequency
               Type: double
-          Location: s3://aws-glue-ori-schw-vi-home-assignment/results/
+          Location: s3://aws-glue-ori-schwa-vi-home-assignment/results/
           InputFormat: org.apache.hadoop.mapred.TextInputFormat
           OutputFormat: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
           SerdeInfo:
@@ -119,7 +119,7 @@ Resources:
               Type: string
             - Name: volatility
               Type: double
-          Location: s3://aws-glue-ori-schw-vi-home-assignment/results/
+          Location: s3://aws-glue-ori-schwa-vi-home-assignment/results/
           InputFormat: org.apache.hadoop.mapred.TextInputFormat
           OutputFormat: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
           SerdeInfo:
@@ -144,7 +144,7 @@ Resources:
               Type: date
             - Name: 30_day_return
               Type: double
-          Location: s3://aws-glue-ori-schw-vi-home-assignment/results/
+          Location: s3://aws-glue-ori-schwa-vi-home-assignment/results/
           InputFormat: org.apache.hadoop.mapred.TextInputFormat
           OutputFormat: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
           SerdeInfo:
