@@ -24,9 +24,17 @@ To begin, I loaded the stock pricing data to get an overview of its structure. T
 
 ### 2. Data Transformation
 The data transformation process includes several steps to enrich the dataset and prepare it for analysis:
-    - **Date Parsing:** Convert date strings to date objects, using the legacy time parser policy for compatibility.
-    - **Adding Calculated Columns:** Add columns for previous close price, daily return, and trading frequency.
-    - **Aggregating Data:** Calculate average daily returns, identify the most frequently traded stock, determine the most volatile stock, and find the top N days with the highest 30-day returns.
+ **Date Parsing**:
+   - Convert date strings to date objects, using the legacy time parser policy for compatibility.
+
+ **Adding Calculated Columns**:
+   - Add columns for previous close price, daily return, and trading frequency.
+
+ **Aggregating Data**:
+   - Calculate average daily returns.
+   - Identify the most frequently traded stock.
+   - Determine the most volatile stock.
+   - Find the top N days with the highest 30-day returns.
 
 ### 3. Deployment
 The final step involves deploying the transformation logic to the cloud. 
