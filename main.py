@@ -146,7 +146,8 @@ def top_n_days_return_dates(stock_prices, window_spec, n = 3):
     try:
         stock_prices = stock_prices.withColumn("previous_30_close", F.lag("close", 30).over(window_spec))
         stock_prices = stock_prices.withColumn("30_day_return", (F.col("close") - F.col("previous_30_close")) / F.col("previous_30_close"))
-        stock_prices = stock_prices.withColumn("rank", F.rank().over(window_spec))
+        window_spec_desc = Window.partitionBy("ticker").orderBy(F.col("30_day_return").desc())
+        stock_prices = stock_prices.withColumn("rank", F.rank().over(window_spec_desc))
         top_3_per_ticker = stock_prices.filter(F.col("rank") <= n).select("ticker", "date", "30_day_return").orderBy(F.col("ticker"))
         top_3_per_ticker.show()
         logger.info(f"Top {n} days with the highest 30-day return calculated and displayed")
