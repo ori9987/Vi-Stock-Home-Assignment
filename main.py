@@ -136,6 +136,7 @@ def most_volatile_stock(stock_prices):
 def top_n_days_return_dates(stock_prices, window_spec, n = 3):
     """
     Finds and displays the top N days with the highest 30-day return.
+    Present top 3 date by ticker
 
     Args:
     stock_prices (DataFrame): DataFrame containing stock prices.
@@ -145,9 +146,11 @@ def top_n_days_return_dates(stock_prices, window_spec, n = 3):
     try:
         stock_prices = stock_prices.withColumn("previous_30_close", F.lag("close", 30).over(window_spec))
         stock_prices = stock_prices.withColumn("30_day_return", (F.col("close") - F.col("previous_30_close")) / F.col("previous_30_close"))
-        top_30_day_returns = stock_prices.orderBy(F.col("30_day_return").desc()).select("ticker", "date", "30_day_return").limit(n)
-        top_30_day_returns.show()
+        stock_prices = stock_prices.withColumn("rank", F.rank().over(window_spec))
+        top_3_per_ticker = stock_prices.filter(F.col("rank") <= n).select("ticker", "date", "30_day_return").orderBy(F.col("ticker"))
+        top_3_per_ticker.show()
         logger.info(f"Top {n} days with the highest 30-day return calculated and displayed")
+        save_to_csv(top_3_per_ticker, filename="top_30_day_returns")
         save_to_csv(top_30_day_returns, filename="top_30_day_returns")
     except Exception as e:
         logger.error(f"An error occurred while calculating top {n} days with highest 30-day return: {e}")
