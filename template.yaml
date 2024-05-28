@@ -1,0 +1,166 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Resources:
+  GlueJobRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: glue.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: GlueJobPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - s3:*
+                  - logs:*
+                  - glue:*
+                Resource: '*'
+    UpdateReplacePolicy: Retain
+    DeletionPolicy: Retain
+
+  GlueJob:
+    Type: AWS::Glue::Job
+    Properties:
+      Name: StockPricingDataAnalysisJob
+      Role: !GetAtt GlueJobRole.Arn
+      Command:
+        Name: glueetl
+        ScriptLocation: s3://aws-glue-ori-vi-home-assignment/main.py
+        PythonVersion: '3'
+      DefaultArguments:
+        '--job-language': python
+        '--TempDir': s3://aws-glue-ori-schw-vi-home-assignment/results/
+      GlueVersion: '4.0'
+      NumberOfWorkers: 10
+      WorkerType: G.1X
+    UpdateReplacePolicy: Retain
+    DeletionPolicy: Retain
+
+  S3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: aws-glue-ori-schw-vi-home-assignment
+      AccessControl: Private
+    UpdateReplacePolicy: Retain
+    DeletionPolicy: Retain
+
+  GlueDatabase:
+    Type: AWS::Glue::Database
+    Properties:
+      CatalogId: !Ref AWS::AccountId
+      DatabaseInput:
+        Name: stock_prices_db
+    UpdateReplacePolicy: Retain
+    DeletionPolicy: Retain
+
+  AverageDailyReturnTable:
+    Type: AWS::Glue::Table
+    Properties:
+      CatalogId: !Ref AWS::AccountId
+      DatabaseName: !Ref GlueDatabase
+      TableInput:
+        Name: average_daily_return
+        StorageDescriptor:
+          Columns:
+            - Name: date
+              Type: date
+            - Name: average_return
+              Type: double
+          Location: s3://aws-glue-ori-schw-vi-home-assignment/results/
+          InputFormat: org.apache.hadoop.mapred.TextInputFormat
+          OutputFormat: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+          SerdeInfo:
+            SerializationLibrary: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+            Parameters:
+              field.delim: ','
+    UpdateReplacePolicy: Retain
+    DeletionPolicy: Retain
+
+
+  MostFrequentStockTable:
+    Type: AWS::Glue::Table
+    Properties:
+      CatalogId: !Ref AWS::AccountId
+      DatabaseName: !Ref GlueDatabase
+      TableInput:
+        Name: most_frequent_stock
+        StorageDescriptor:
+          Columns:
+            - Name: ticker
+              Type: string
+            - Name: frequency
+              Type: double
+          Location: s3://aws-glue-ori-schw-vi-home-assignment/results/
+          InputFormat: org.apache.hadoop.mapred.TextInputFormat
+          OutputFormat: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+          SerdeInfo:
+            SerializationLibrary: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+            Parameters:
+              field.delim: ','
+    UpdateReplacePolicy: Retain
+    DeletionPolicy: Retain
+
+  MostVolatileStockTable:
+    Type: AWS::Glue::Table
+    Properties:
+      CatalogId: !Ref AWS::AccountId
+      DatabaseName: !Ref GlueDatabase
+      TableInput:
+        Name: most_volatile_stock
+        StorageDescriptor:
+          Columns:
+            - Name: ticker
+              Type: string
+            - Name: volatility
+              Type: double
+          Location: s3://aws-glue-ori-schw-vi-home-assignment/results/
+          InputFormat: org.apache.hadoop.mapred.TextInputFormat
+          OutputFormat: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+          SerdeInfo:
+            SerializationLibrary: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+            Parameters:
+              field.delim: ','
+    UpdateReplacePolicy: Retain
+    DeletionPolicy: Retain
+
+  TopNDayReturnTable:
+    Type: AWS::Glue::Table
+    Properties:
+      CatalogId: !Ref AWS::AccountId
+      DatabaseName: !Ref GlueDatabase
+      TableInput:
+        Name: top_n_days_return
+        StorageDescriptor:
+          Columns:
+            - Name: ticker
+              Type: string
+            - Name: date
+              Type: date
+            - Name: 30_day_return
+              Type: double
+          Location: s3://aws-glue-ori-schw-vi-home-assignment/results/
+          InputFormat: org.apache.hadoop.mapred.TextInputFormat
+          OutputFormat: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+          SerdeInfo:
+            SerializationLibrary: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+            Parameters:
+              field.delim: ','
+    UpdateReplacePolicy: Retain
+    DeletionPolicy: Retain
+
+Outputs:
+  GlueJobName:
+    Value: !Ref GlueJob
+    Description: Glue Job Name
+  S3BucketName:
+    Value: !Ref S3Bucket
+    Description: S3 Bucket Name
+  GlueDatabaseName:
+    Value: !Ref GlueDatabase
+    Description: Glue Database Name
